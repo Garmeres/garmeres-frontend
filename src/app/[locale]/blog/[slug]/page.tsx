@@ -1,6 +1,7 @@
 import { getBlogPostBySlug, getBlogPosts, getLocales } from "@/lib/strapi";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export async function generateMetadata({
 	params,
@@ -35,9 +36,40 @@ export default async function BlogPostPage({
 	if (!result) notFound();
 	const { data: post } = result;
 
+	const formattedDate = new Date(post.publishedAt).toLocaleDateString(locale, {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	});
+
 	return (
-		<article>
-			<h1>{post.title}</h1>
-		</article>
+		<div className="prose max-w-[1024px] flex flex-col w-full mx-auto px-6 md:px-12 xl:px-16 pt-16 pb-32 bg-white flex-grow h-full text-black">
+			{/* Thumbnail */}
+			{post.thumbnail && (
+				<div className="not-prose items-center flex flex-col mx-auto gap-4 mb-16">
+					<Image
+						src={post.thumbnail.url}
+						alt={post.thumbnail.alternativeText ?? ""}
+						width={720}
+						height={512}
+						quality={70}
+						className="max-h-[420px] object-contain"
+					/>
+					{post.thumbnail.caption && (
+						<span className="items-center text-center">
+							{post.thumbnail.caption}
+						</span>
+					)}
+				</div>
+			)}
+
+			{/* Title and date */}
+			<div>
+				<h1>{post.title}</h1>
+				<p className="text-base text-gray-500">- {formattedDate}</p>
+			</div>
+
+			{/* Body rendering to be added */}
+		</div>
 	);
 }

@@ -52,7 +52,7 @@ export function Menu({
 					stroke="currentColor"
 					fill="none"
 					strokeWidth="0"
-					viewBox="0 0 15 15"
+					viewBox="0 0 10 15"
 					height="35"
 					width="35"
 					xmlns="http://www.w3.org/2000/svg"

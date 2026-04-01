@@ -22,7 +22,7 @@ export default async function LocaleLayout({
 	return (
 		<div lang={locale} className="flex flex-col min-h-screen">
 			<Header locale={locale} />
-			<main className="flex-1">{children}</main>
+			<main className="flex-1 flex flex-col">{children}</main>
 			<Footer locale={locale} />
 		</div>
 	);

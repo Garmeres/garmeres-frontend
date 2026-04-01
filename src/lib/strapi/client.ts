@@ -144,3 +144,64 @@ export async function getSocialMediaLinks(): Promise<
 		sort: "index:asc",
 	});
 }
+
+// --- Locale path map ---
+
+export async function getLocalePathMap(): Promise<
+	Record<string, Record<string, string>>
+> {
+	const locales = await getLocales();
+	const map: Record<string, Record<string, string>> = {};
+
+	// Home pages: /{locale}
+	for (const l of locales) {
+		const path = `/${l.code}`;
+		map[path] ??= {};
+		for (const other of locales) {
+			map[path][other.code] = `/${other.code}`;
+		}
+	}
+
+	// Pages: /{locale}/{slug}
+	for (const l of locales) {
+		const { data: pages } = await fetchStrapi<StrapiCollectionResponse<Page>>(
+			"/pages",
+			{
+				locale: l.code,
+				"fields[0]": "slug",
+				"populate[localizations][fields][0]": "slug",
+				"populate[localizations][fields][1]": "locale",
+			},
+		);
+		for (const page of pages) {
+			const path = `/${l.code}/${page.slug}`;
+			map[path] ??= {};
+			map[path][l.code] = path;
+			for (const loc of page.localizations ?? []) {
+				map[path][loc.locale] = `/${loc.locale}/${loc.slug}`;
+			}
+		}
+	}
+
+	// Blog posts: /{locale}/blog/{slug}
+	for (const l of locales) {
+		const { data: posts } = await fetchStrapi<
+			StrapiCollectionResponse<BlogPost>
+		>("/blog-posts", {
+			locale: l.code,
+			"fields[0]": "slug",
+			"populate[localizations][fields][0]": "slug",
+			"populate[localizations][fields][1]": "locale",
+		});
+		for (const post of posts) {
+			const path = `/${l.code}/blog/${post.slug}`;
+			map[path] ??= {};
+			map[path][l.code] = path;
+			for (const loc of post.localizations ?? []) {
+				map[path][loc.locale] = `/${loc.locale}/blog/${loc.slug}`;
+			}
+		}
+	}
+
+	return map;
+}

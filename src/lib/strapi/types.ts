@@ -148,6 +148,16 @@ export type DynamicZoneComponent =
 	| BlogPostsComponent
 	| MembershipRegistrationFormComponent;
 
+// Localization reference (from populate[localizations])
+export interface LocalizationRef {
+	id: number;
+	documentId: string;
+	slug?: string;
+	name?: string;
+	title?: string;
+	locale: string;
+}
+
 // Content types
 export interface HomePage {
 	id: number;
@@ -178,6 +188,7 @@ export interface Page {
 	updatedAt: string;
 	publishedAt: string;
 	locale: string;
+	localizations?: LocalizationRef[];
 }
 
 export interface BlogPost {
@@ -191,6 +202,7 @@ export interface BlogPost {
 	updatedAt: string;
 	publishedAt: string;
 	locale: string;
+	localizations?: LocalizationRef[];
 }
 
 export interface SocialMedia {
