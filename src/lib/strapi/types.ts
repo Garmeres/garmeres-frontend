@@ -123,7 +123,6 @@ export interface HeadingComponent {
 export interface CalendarComponent {
 	__component: "content.calendar";
 	id: number;
-	updatedAtLabel: string;
 }
 
 export interface BlogPostsComponent {

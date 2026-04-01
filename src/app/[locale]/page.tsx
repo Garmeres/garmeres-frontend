@@ -2,6 +2,7 @@ import { getHomePage } from "@/lib/strapi";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { DynamicZone } from "@/components/dynamic-zone";
 
 export async function generateMetadata({
 	params,
@@ -43,8 +44,10 @@ export default async function HomePage({
 				)}
 				<div className="bg-slate-100/95 w-full py-16 px-4 shadow-lg text-black">
 					<div className="flex flex-col items-center gap-8 xl:gap-16 w-full max-w-[1024px] mx-auto text-center">
-						<h1 className="text-4xl font-light">{homePage.title}</h1>
-						<p className="leading-9">{homePage.subtitle}</p>
+						<h1 className="text-3xl xl:text-4xl font-light">
+							{homePage.title}
+						</h1>
+						<p className="text-base leading-9">{homePage.subtitle}</p>
 						{buttonLink && homePage.bannerButtonText && (
 							<Link
 								href={buttonLink}
@@ -59,7 +62,7 @@ export default async function HomePage({
 
 			{/* Body content */}
 			<div className="prose max-w-[1024px] flex flex-col w-full mx-auto px-6 md:px-12 xl:px-16 pt-16 pb-32 bg-white flex-grow h-full text-black">
-				{/* Body rendering to be added */}
+				<DynamicZone components={homePage.body} locale={locale} />
 			</div>
 		</div>
 	);

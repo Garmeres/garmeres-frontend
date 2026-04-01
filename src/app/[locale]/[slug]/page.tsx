@@ -2,6 +2,7 @@ import { getPageBySlug, getPages, getLocales } from "@/lib/strapi";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
+import { DynamicZone } from "@/components/dynamic-zone";
 
 export async function generateMetadata({
 	params,
@@ -52,7 +53,7 @@ export default async function DynamicPage({
 			)}
 			<div className="prose max-w-[1024px] flex flex-col w-full mx-auto px-6 md:px-12 xl:px-16 pt-16 pb-32 bg-white flex-grow h-full text-black">
 				<h1>{page.name}</h1>
-				{/* Body rendering to be added */}
+				<DynamicZone components={page.body} locale={locale} />
 			</div>
 		</div>
 	);

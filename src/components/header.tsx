@@ -35,9 +35,9 @@ export async function Header({ locale }: { locale: string }) {
 					alt=""
 					width={70}
 					height={70}
-					className="rounded w-[55px] xl:w-[65px]"
+					className="rounded w-[45px] xl:w-[55px]"
 				/>
-				<span className="text-2xl xl:text-3xl font-extralight">Garmeres</span>
+				<span className="text-xl xl:text-2xl font-extralight">Garmeres</span>
 			</Link>
 			<div className="flex flex-row items-center gap-4 xl:gap-6">
 				<LanguageSelector
