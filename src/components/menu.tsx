@@ -1,12 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 
 interface MenuItem {
 	name: string;
 	slug: string;
 }
+
+const menuLabels: Record<string, { open: string; close: string }> = {
+	en: { open: "Open menu", close: "Close menu" },
+	no: { open: "Åpne meny", close: "Lukk meny" },
+	se: { open: "Rahpat fálu", close: "Gidde fálu" },
+};
 
 export function Menu({
 	locale,
@@ -18,16 +24,51 @@ export function Menu({
 	homePageName: string;
 }) {
 	const [open, setOpen] = useState(false);
+	const triggerRef = useRef<HTMLButtonElement>(null);
+	const closeRef = useRef<HTMLButtonElement>(null);
+	const navRef = useRef<HTMLElement>(null);
+	const labels = menuLabels[locale] ?? menuLabels.en;
+
+	// Focus close button on open, return focus to trigger on close
+	const prevOpen = useRef(false);
+	useEffect(() => {
+		if (open && !prevOpen.current) {
+			closeRef.current?.focus();
+		} else if (!open && prevOpen.current) {
+			triggerRef.current?.focus();
+		}
+		prevOpen.current = open;
+	}, [open]);
+
+	// Focus trap + Escape
+	const handleKeyDown = useCallback((e: KeyboardEvent) => {
+		if (e.key === "Escape") {
+			setOpen(false);
+			return;
+		}
+		if (e.key === "Tab" && navRef.current) {
+			const focusable = navRef.current.querySelectorAll<HTMLElement>(
+				'button, a[href], [tabindex]:not([tabindex="-1"])',
+			);
+			if (focusable.length === 0) return;
+			const first = focusable[0];
+			const last = focusable[focusable.length - 1];
+			if (e.shiftKey && document.activeElement === first) {
+				e.preventDefault();
+				last.focus();
+			} else if (!e.shiftKey && document.activeElement === last) {
+				e.preventDefault();
+				first.focus();
+			}
+		}
+	}, []);
 
 	useEffect(() => {
-		function handleKeyDown(e: KeyboardEvent) {
-			if (e.key === "Escape") setOpen(false);
-		}
 		if (open) {
 			document.addEventListener("keydown", handleKeyDown);
 			return () => document.removeEventListener("keydown", handleKeyDown);
 		}
-	}, [open]);
+	}, [open, handleKeyDown]);
 
 	return (
 		<div className="relative">
@@ -43,9 +84,10 @@ export function Menu({
 
 			{/* Hamburger button */}
 			<button
+				ref={triggerRef}
 				type="button"
-				aria-label={open ? "Close menu" : "Open menu"}
-				className="text-white my-4 focus:outline-none"
+				aria-label={open ? labels.close : labels.open}
+				className="text-white my-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded"
 				onClick={() => setOpen(!open)}
 			>
 				<svg
@@ -68,6 +110,7 @@ export function Menu({
 
 			{/* Slide-out nav panel */}
 			<nav
+				ref={navRef}
 				className="fixed flex flex-col justify-between top-0 right-0 bottom-0 rounded-sm max-h-screen w-full sm:w-[380px] max-w-screen bg-zinc-200 shadow-xl items-center transition-[transform,visibility] duration-300 z-50"
 				style={{
 					transform: open ? "translateX(0)" : "translateX(100%)",
@@ -77,9 +120,10 @@ export function Menu({
 				{/* Close button */}
 				<div className="relative flex flex-row py-3 px-4 w-full">
 					<button
+						ref={closeRef}
 						type="button"
-						aria-label="Close menu"
-						className="text-black my-4 focus:outline-none"
+						aria-label={labels.close}
+						className="text-black my-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-800 rounded"
 						onClick={() => setOpen(false)}
 					>
 						<svg
