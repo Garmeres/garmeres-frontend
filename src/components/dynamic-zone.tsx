@@ -3,6 +3,7 @@ import { Heading } from "./dynamic-zone/heading";
 import { Calendar } from "./dynamic-zone/calendar";
 import { RichText } from "./dynamic-zone/rich-text";
 import { MembershipRegistrationForm } from "./dynamic-zone/membership-registration-form";
+import { BlogPosts } from "./dynamic-zone/blog-posts";
 
 export function DynamicZone({
 	components,
@@ -23,7 +24,9 @@ export function DynamicZone({
 					case "content.calendar":
 						return <Calendar key={key} locale={locale} />;
 					case "content.blog-posts":
-						return <div key={key}>{/* BlogPosts */}</div>;
+						return (
+							<BlogPosts key={key} component={component} locale={locale} />
+						);
 					case "content.membership-registration-form":
 						return (
 							<MembershipRegistrationForm key={key} component={component} />
