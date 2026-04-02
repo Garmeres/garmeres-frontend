@@ -77,7 +77,7 @@ export function LanguageSelector({
 			{open && (
 				<ul
 					role="menu"
-					className="absolute right-0 top-full mt-2 bg-white rounded shadow-lg py-1 min-w-[180px] z-50"
+					className="absolute right-0 top-full mt-2 bg-zinc-900 border border-zinc-700 rounded shadow-lg py-1 min-w-[180px] z-50"
 				>
 					{locales.map((l) => (
 						<li key={l.code} role="none">
@@ -85,10 +85,10 @@ export function LanguageSelector({
 								role="menuitem"
 								lang={l.code}
 								href={getHref(l.code)}
-								className={`block px-4 py-2 text-sm no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-800 ${
+								className={`block px-4 py-2 text-sm no-underline focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white ${
 									l.code === locale
-										? "font-bold text-zinc-900 bg-zinc-100"
-										: "text-zinc-700 hover:bg-zinc-100"
+										? "font-bold text-white bg-zinc-700"
+										: "text-zinc-300 hover:bg-zinc-700"
 								}`}
 								onClick={() => setOpen(false)}
 							>

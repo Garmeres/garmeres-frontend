@@ -87,16 +87,16 @@ export function Menu({
 				ref={triggerRef}
 				type="button"
 				aria-label={open ? labels.close : labels.open}
-				className="text-white my-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded"
+				className="text-white p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded"
 				onClick={() => setOpen(!open)}
 			>
 				<svg
 					stroke="currentColor"
 					fill="none"
 					strokeWidth="0"
-					viewBox="0 0 10 15"
-					height="35"
-					width="35"
+					viewBox="0 0 15 15"
+					height="24"
+					width="24"
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<path
@@ -111,19 +111,19 @@ export function Menu({
 			{/* Slide-out nav panel */}
 			<nav
 				ref={navRef}
-				className="fixed flex flex-col justify-between top-0 right-0 bottom-0 rounded-sm max-h-screen w-full sm:w-[380px] max-w-screen bg-zinc-200 shadow-xl items-center transition-[transform,visibility] duration-300 z-50"
+				className="fixed flex flex-col top-0 right-0 bottom-0 max-h-screen w-72 bg-zinc-800 shadow-xl transition-[transform,visibility] duration-300 z-50"
 				style={{
 					transform: open ? "translateX(0)" : "translateX(100%)",
 					visibility: open ? "visible" : "hidden",
 				}}
 			>
 				{/* Close button */}
-				<div className="relative flex flex-row py-3 px-4 w-full">
+				<div className="flex justify-end px-4 py-4">
 					<button
 						ref={closeRef}
 						type="button"
 						aria-label={labels.close}
-						className="text-black my-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-800 rounded"
+						className="text-white p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white rounded hover:bg-zinc-700"
 						onClick={() => setOpen(false)}
 					>
 						<svg
@@ -131,8 +131,8 @@ export function Menu({
 							fill="none"
 							strokeWidth="0"
 							viewBox="0 0 15 15"
-							height="35"
-							width="35"
+							height="20"
+							width="20"
 							xmlns="http://www.w3.org/2000/svg"
 						>
 							<path
@@ -146,26 +146,24 @@ export function Menu({
 				</div>
 
 				{/* Menu items */}
-				<ul className="relative flex flex-col flex-grow w-full justify-evenly sm:justify-start sm:gap-16 items-center pb-12 sm:pt-12">
+				<ul className="flex flex-col px-4 py-2 gap-3">
 					<li key="home">
 						<Link
 							href={`/${locale}`}
-							className="text-black flex h-full w-full flex-row gap-2 items-center no-underline"
+							className="block px-4 py-2.5 text-sm text-white no-underline rounded hover:bg-zinc-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
 							onClick={() => setOpen(false)}
 						>
-							<span className="mx-auto text-xl font-normal">
-								{homePageName}
-							</span>
+							{homePageName}
 						</Link>
 					</li>
 					{menuItems.map((item) => (
 						<li key={item.slug}>
 							<Link
 								href={`/${locale}/${item.slug}`}
-								className="text-black flex h-full w-full flex-row gap-2 items-center no-underline"
+								className="block px-4 py-2.5 text-sm text-white no-underline rounded hover:bg-zinc-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
 								onClick={() => setOpen(false)}
 							>
-								<span className="mx-auto text-xl font-normal">{item.name}</span>
+								{item.name}
 							</Link>
 						</li>
 					))}
