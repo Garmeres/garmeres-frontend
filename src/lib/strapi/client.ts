@@ -114,7 +114,7 @@ export async function getBlogPosts(
 	return fetchStrapi<StrapiCollectionResponse<BlogPost>>("/blog-posts", {
 		locale,
 		populate: "*",
-		sort: "publishedAt:desc",
+		sort: "createdAt:desc",
 		"pagination[page]": String(page),
 		"pagination[pageSize]": String(pageSize),
 	});

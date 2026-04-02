@@ -61,7 +61,7 @@ export function DateIcon({
 			aria-label={`${date.getDate()}. ${monthLabel}`}
 		>
 			<span aria-hidden="true">{date.getDate()}</span>
-			<span aria-hidden="true" className="text-xs">
+			<span aria-hidden="true" className="text-sm">
 				{monthLabel.slice(0, 3)}
 			</span>
 		</div>
