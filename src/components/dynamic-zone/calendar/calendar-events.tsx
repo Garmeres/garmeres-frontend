@@ -26,7 +26,7 @@ export function CalendarEvents({
 	locale: string;
 }) {
 	return (
-		<div className="flex flex-col items-center mx-auto gap-6 w-full max-w-[640px] mb-16">
+		<div className="not-prose flex flex-col items-center mx-auto gap-6 w-full max-w-[640px] mb-16">
 			<div className="w-full divide-y divide-zinc-200 shadow-lg border-zinc-200 border-1 shadow-black/[0.2]">
 				{page.events.length > 0 ? (
 					page.events.map((event, i) => (

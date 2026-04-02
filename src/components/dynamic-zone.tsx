@@ -2,6 +2,7 @@ import type { DynamicZoneComponent } from "@/lib/strapi/types";
 import { Heading } from "./dynamic-zone/heading";
 import { Calendar } from "./dynamic-zone/calendar";
 import { RichText } from "./dynamic-zone/rich-text";
+import { MembershipRegistrationForm } from "./dynamic-zone/membership-registration-form";
 
 export function DynamicZone({
 	components,
@@ -24,7 +25,9 @@ export function DynamicZone({
 					case "content.blog-posts":
 						return <div key={key}>{/* BlogPosts */}</div>;
 					case "content.membership-registration-form":
-						return <div key={key}>{/* MembershipRegistrationForm */}</div>;
+						return (
+							<MembershipRegistrationForm key={key} component={component} />
+						);
 					default:
 						return null;
 				}
