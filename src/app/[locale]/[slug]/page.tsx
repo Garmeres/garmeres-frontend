@@ -1,8 +1,16 @@
-import { getPageBySlug, getPages, getLocales } from "@/lib/strapi";
+import {
+	getPageBySlug,
+	getPages,
+	getLocales,
+	getPageSlugsForAllLocales,
+	extractDescriptionFromBody,
+} from "@/lib/strapi";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { DynamicZone } from "@/components/dynamic-zone";
+
+const SITE_URL = process.env.SITE_URL || "https://garmeres.com";
 
 export async function generateMetadata({
 	params,
@@ -12,7 +20,39 @@ export async function generateMetadata({
 	const { locale, slug } = await params;
 	const result = await getPageBySlug(slug, locale);
 	if (!result) return {};
-	return { title: result.data.name };
+	const slugMap = await getPageSlugsForAllLocales(slug, locale);
+	const languages: Record<string, string> = {};
+	for (const [loc, locSlug] of Object.entries(slugMap)) {
+		languages[loc] = `${SITE_URL}/${loc}/${locSlug}`;
+	}
+	if (slugMap.en) {
+		languages["x-default"] = `${SITE_URL}/en/${slugMap.en}`;
+	}
+	const description = extractDescriptionFromBody(result.data.body);
+	const url = `${SITE_URL}/${locale}/${slug}`;
+	return {
+		title: result.data.name,
+		description,
+		alternates: {
+			canonical: url,
+			languages,
+		},
+		openGraph: {
+			title: result.data.name,
+			description: description || undefined,
+			url,
+			siteName: "Garmeres",
+			locale,
+			type: "website",
+			images: [
+				{
+					url:
+						result.data.backgroundImage?.url ||
+						`${SITE_URL}/garmeres-logo-small.png`,
+				},
+			],
+		},
+	};
 }
 
 export async function generateStaticParams() {

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "./globals.css";
 
 export const metadata: Metadata = {
 	title: {
@@ -8,16 +7,10 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return (
-		<html className="h-full antialiased">
-			<body className="min-h-full flex flex-col overflow-x-hidden">
-				{children}
-			</body>
-		</html>
-	);
+	return children;
 }

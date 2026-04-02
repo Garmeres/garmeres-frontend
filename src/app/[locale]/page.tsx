@@ -1,8 +1,14 @@
-import { getHomePage } from "@/lib/strapi";
+import {
+	getHomePage,
+	getLocales,
+	extractDescriptionFromBody,
+} from "@/lib/strapi";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { DynamicZone } from "@/components/dynamic-zone";
+
+const SITE_URL = process.env.SITE_URL || "https://garmeres.com";
 
 export async function generateMetadata({
 	params,
@@ -11,7 +17,37 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	const { locale } = await params;
 	const { data: homePage } = await getHomePage(locale);
-	return { title: homePage.name };
+	const locales = await getLocales();
+	const languages: Record<string, string> = {};
+	for (const l of locales) {
+		languages[l.code] = `${SITE_URL}/${l.code}`;
+	}
+	languages["x-default"] = `${SITE_URL}/en`;
+	const description =
+		homePage.subtitle || extractDescriptionFromBody(homePage.body);
+	const url = `${SITE_URL}/${locale}`;
+	return {
+		title: homePage.name,
+		description,
+		alternates: {
+			canonical: url,
+			languages,
+		},
+		openGraph: {
+			title: homePage.name,
+			description: description || undefined,
+			url,
+			siteName: "Garmeres",
+			locale,
+			type: "website",
+			images: [
+				{
+					url:
+						homePage.bannerImage?.url || `${SITE_URL}/garmeres-logo-small.png`,
+				},
+			],
+		},
+	};
 }
 
 export default async function HomePage({
