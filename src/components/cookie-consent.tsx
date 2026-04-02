@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Script from "next/script";
 
 const CONSENT_COOKIE = "ga_consent";
-const GA_ID = "G-D4DKCE7RH0";
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
 const COOKIE_MAX_AGE = 28 * 24 * 60 * 60; // 28 days in seconds
 
 function getCookie(name: string): string | undefined {
