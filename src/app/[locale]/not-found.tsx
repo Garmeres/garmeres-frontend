@@ -30,7 +30,7 @@ export default function NotFound() {
 	const t = translations[locale];
 
 	return (
-		<div className="prose max-w-[1024px] flex flex-col w-full mx-auto px-6 md:px-12 xl:px-16 pt-16 pb-32 bg-white flex-grow h-full text-black">
+		<div className="prose prose-sm max-w-[1024px] flex flex-col w-full mx-auto px-6 md:px-12 xl:px-16 pt-16 pb-32 bg-white flex-grow h-full text-black">
 			<h1>{t.title}</h1>
 			<p>{t.description}</p>
 			<p>

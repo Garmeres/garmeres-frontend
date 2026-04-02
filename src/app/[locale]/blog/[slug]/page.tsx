@@ -44,7 +44,7 @@ export default async function BlogPostPage({
 	});
 
 	return (
-		<div className="prose max-w-[1024px] flex flex-col w-full mx-auto px-6 md:px-12 xl:px-16 pt-16 pb-32 bg-white flex-grow h-full text-black">
+		<div className="prose prose-sm max-w-[1024px] flex flex-col w-full mx-auto px-6 md:px-12 xl:px-16 pt-16 pb-32 bg-white flex-grow h-full text-black">
 			{/* Thumbnail */}
 			{post.thumbnail && (
 				<div className="not-prose items-center flex flex-col mx-auto gap-4 mb-16">

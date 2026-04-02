@@ -2,6 +2,7 @@ import { getLocales } from "@/lib/strapi";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { CookieConsent } from "@/components/cookie-consent";
 
 export async function generateStaticParams() {
 	const locales = await getLocales();
@@ -36,6 +37,7 @@ export default async function LocaleLayout({
 				{children}
 			</main>
 			<Footer locale={locale} />
+			<CookieConsent locale={locale} />
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
 import { getContact, getLocales, getSocialMediaLinks } from "@/lib/strapi";
 import Image from "next/image";
+import Link from "next/link";
 
 const footerLabels = {
 	no: {
@@ -7,20 +8,29 @@ const footerLabels = {
 		vipps: "Vipps",
 		bankAccount: "Kontonr",
 		orgNumber: "Org.nr",
+		privacyPolicy: "Personvernerklæring",
 	},
 	en: {
 		email: "E-mail",
 		vipps: "Vipps",
 		bankAccount: "Account number",
 		orgNumber: "Organisation number",
+		privacyPolicy: "Privacy policy",
 	},
 	se: {
 		email: "E-boasta",
 		vipps: "Vipps",
 		bankAccount: "Kontonr",
 		orgNumber: "Org.nr",
+		privacyPolicy: "Privacy policy",
 	},
 } as const;
+
+const privacyLinks: Record<string, string> = {
+	no: "/no/personvernserklaering",
+	en: "/en/privacy-policy",
+	se: "/en/privacy-policy",
+};
 
 export async function Footer({ locale }: { locale: string }) {
 	const [{ data: contact }, { data: socialLinks }, locales] = await Promise.all(
@@ -34,7 +44,7 @@ export async function Footer({ locale }: { locale: string }) {
 		footerLabels[defaultLocale as keyof typeof footerLabels];
 
 	return (
-		<footer className="flex flex-col justify-center items-center gap-4 bg-zinc-800 py-8 px-8 text-white">
+		<footer className="flex flex-col justify-center items-center gap-4 bg-zinc-800 py-8 px-8 text-white text-sm">
 			<div className="flex flex-row gap-8 justify-center">
 				{socialLinks.map((link) => (
 					<a
@@ -43,7 +53,7 @@ export async function Footer({ locale }: { locale: string }) {
 						href={link.url}
 						rel="nofollow"
 						target="_blank"
-						className="text-white"
+						className="opacity-95 hover:opacity-100 transition-opacity"
 					>
 						<Image src={link.icon.url} alt={link.name} width={28} height={28} />
 					</a>
@@ -51,7 +61,10 @@ export async function Footer({ locale }: { locale: string }) {
 			</div>
 			<p>
 				{labels.email}:{" "}
-				<a href={`mailto:${contact.email}`} className="underline">
+				<a
+					href={`mailto:${contact.email}`}
+					className="text-zinc-300 underline hover:text-white transition-colors"
+				>
 					{contact.email}
 				</a>
 			</p>
@@ -64,6 +77,12 @@ export async function Footer({ locale }: { locale: string }) {
 			<p>
 				{labels.orgNumber}: {contact.organisationNumber}
 			</p>
+			<Link
+				href={privacyLinks[locale] ?? privacyLinks.en}
+				className="text-zinc-300 underline hover:text-white transition-colors mt-2"
+			>
+				{labels.privacyPolicy}
+			</Link>
 		</footer>
 	);
 }
