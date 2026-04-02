@@ -131,14 +131,14 @@ export function CookieConsent({ locale }: { locale: string }) {
 					<button
 						type="button"
 						onClick={() => handleResponse(true)}
-						className="px-5 py-2 text-sm rounded bg-white text-zinc-900 hover:bg-zinc-200 transition-colors"
+						className="px-5 py-2 text-sm rounded bg-white text-zinc-900 hover:bg-zinc-200 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-800"
 					>
 						{t.accept}
 					</button>
 					<button
 						type="button"
 						onClick={() => handleResponse(false)}
-						className="px-5 py-2 text-sm rounded text-zinc-300 hover:text-white transition-colors"
+						className="px-5 py-2 text-sm rounded text-zinc-300 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
 					>
 						{t.reject}
 					</button>

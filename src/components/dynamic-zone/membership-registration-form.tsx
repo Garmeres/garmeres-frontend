@@ -25,6 +25,7 @@ export function MembershipRegistrationForm({
 				className="not-prose my-4"
 			>
 				<iframe
+					title="Registration form"
 					className="flex flex-col justify-center -mx-2 min-h-[900px] sm:min-h-[770px] lg:min-h-[740px]"
 					allowFullScreen
 					lang={component.lang}

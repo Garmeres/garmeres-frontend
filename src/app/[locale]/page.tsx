@@ -90,7 +90,7 @@ export default async function HomePage({
 						{buttonLink && homePage.bannerButtonText && (
 							<Link
 								href={buttonLink}
-								className="mt-2 px-6 py-2.5 text-sm rounded-full border border-white/60 text-white hover:bg-white/15 no-underline transition-colors"
+								className="mt-2 px-6 py-2.5 text-sm rounded-full border border-white text-white hover:bg-white/15 no-underline transition-colors"
 							>
 								{homePage.bannerButtonText}
 							</Link>

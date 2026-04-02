@@ -73,7 +73,9 @@ export function Menu({
 	return (
 		<div className="relative">
 			{/* Backdrop */}
+			{/* biome-ignore lint: intentional non-interactive backdrop */}
 			<div
+				role="presentation"
 				className="fixed inset-0 bg-black/40 z-40 transition-[opacity,visibility] duration-300"
 				style={{
 					opacity: open ? 1 : 0,

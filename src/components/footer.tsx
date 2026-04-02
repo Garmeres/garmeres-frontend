@@ -55,7 +55,7 @@ export async function Footer({ locale }: { locale: string }) {
 						target="_blank"
 						className="opacity-95 hover:opacity-100 transition-opacity"
 					>
-						<Image src={link.icon.url} alt={link.name} width={28} height={28} />
+						<Image src={link.icon.url} alt="" width={28} height={28} />
 					</a>
 				))}
 			</div>
