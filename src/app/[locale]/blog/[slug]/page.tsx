@@ -2,6 +2,7 @@ import { getBlogPostBySlug, getBlogPosts, getLocales } from "@/lib/strapi";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
+import { RichText } from "@/components/dynamic-zone/rich-text";
 
 export async function generateMetadata({
 	params,
@@ -69,7 +70,8 @@ export default async function BlogPostPage({
 				<p className="text-base text-gray-500">- {formattedDate}</p>
 			</div>
 
-			{/* Body rendering to be added */}
+			{/* Body */}
+			<RichText blocks={post.body} />
 		</div>
 	);
 }
