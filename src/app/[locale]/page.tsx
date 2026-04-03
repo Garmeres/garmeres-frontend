@@ -10,6 +10,11 @@ import { DynamicZone } from "@/components/dynamic-zone";
 
 const SITE_URL = process.env.SITE_URL || "https://garmeres.com";
 
+export async function generateStaticParams() {
+	const locales = await getLocales();
+	return locales.map((locale) => ({ locale: locale.code }));
+}
+
 export async function generateMetadata({
 	params,
 }: {
