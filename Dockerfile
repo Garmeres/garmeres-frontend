@@ -10,18 +10,14 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ARG STRAPI_URL
-ARG STRAPI_API_TOKEN
-ARG CALENDAR_URL
-ARG SITE_URL
-ARG NEXT_PUBLIC_GA_ID
-ENV STRAPI_URL=$STRAPI_URL
-ENV STRAPI_API_TOKEN=$STRAPI_API_TOKEN
-ENV CALENDAR_URL=$CALENDAR_URL
-ENV SITE_URL=$SITE_URL
-ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID
+ENV STRAPI_URL=https://strapi.balve.garmeres.com
+ENV CALENDAR_URL=https://balve-calendar.hel1.your-objectstorage.com
+ENV SITE_URL=https://garmeres.com
+ENV NEXT_PUBLIC_GA_ID=G-D4DKCE7RH0
 
-RUN npm run build
+RUN --mount=type=secret,id=STRAPI_API_TOKEN \
+    STRAPI_API_TOKEN=$(cat /run/secrets/STRAPI_API_TOKEN) \
+    npm run build
 
 FROM base AS runner
 WORKDIR /app

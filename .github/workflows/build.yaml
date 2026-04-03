@@ -30,12 +30,8 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name == 'push' }}
-          build-args: |
-            STRAPI_URL=${{ secrets.STRAPI_URL }}
+          secrets: |
             STRAPI_API_TOKEN=${{ secrets.STRAPI_API_TOKEN }}
-            CALENDAR_URL=${{ secrets.CALENDAR_URL }}
-            SITE_URL=${{ secrets.SITE_URL }}
-            NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }}
           tags: |
             ${{ env.IMAGE }}:latest
             ${{ env.IMAGE }}:${{ github.sha }}

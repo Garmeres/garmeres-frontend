@@ -79,20 +79,20 @@ The site is statically generated at build time. All pages are pre-rendered via `
 
 ### Docker
 
+The Dockerfile hardcodes public configuration (`STRAPI_URL`, `CALENDAR_URL`, `SITE_URL`, `NEXT_PUBLIC_GA_ID`). Only `STRAPI_API_TOKEN` is passed as a build secret:
+
 ```bash
-docker build \
-  --build-arg STRAPI_URL=https://strapi.balve.garmeres.com \
-  --build-arg STRAPI_API_TOKEN=... \
-  --build-arg CALENDAR_URL=... \
-  --build-arg SITE_URL=https://garmeres.com \
-  --build-arg NEXT_PUBLIC_GA_ID=G-D4DKCE7RH0 \
-  -t garmeres-frontend .
+echo "your-token" > /tmp/strapi-token
+docker build --secret id=STRAPI_API_TOKEN,src=/tmp/strapi-token -t garmeres-frontend .
+rm /tmp/strapi-token
 docker run -p 3000:3000 garmeres-frontend
 ```
 
 ### CI/CD
 
-Pushing to `main` triggers a GitHub Actions workflow that builds the Docker image and pushes it to `ghcr.io/garmeres/garmeres-frontend`. The build args are sourced from GitHub repository secrets.
+Pushing to `main` triggers a GitHub Actions workflow that builds the Docker image and pushes it to `ghcr.io/garmeres/garmeres-frontend`. The API token is passed via Docker build secrets (not baked into the image).
+
+**Required GitHub repository secret:** `STRAPI_API_TOKEN`
 
 ### Kubernetes
 
