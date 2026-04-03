@@ -17,7 +17,6 @@ function formatDate(iso: string) {
 
 function BlogPostCard({ post, locale }: { post: BlogPost; locale: string }) {
 	const imageUrl = post.thumbnail?.url ?? FALLBACK_IMAGE;
-	const alt = post.thumbnail?.alternativeText ?? "";
 
 	return (
 		<Link
@@ -27,7 +26,7 @@ function BlogPostCard({ post, locale }: { post: BlogPost; locale: string }) {
 			<div className="relative aspect-square w-full overflow-hidden rounded">
 				<Image
 					src={imageUrl}
-					alt={alt}
+					alt=""
 					fill
 					className="object-cover"
 					sizes="(max-width: 640px) 50vw, 33vw"
