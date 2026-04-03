@@ -5,7 +5,7 @@ import type { ImageLoaderProps } from "next/image";
  * pre-generated responsive format URLs on S3.
  *
  * Strapi generates: thumbnail (245px), small (500px), medium (750px), large (1000px).
- * The format URLs follow the pattern: /uploads/{format}_{filename}
+ * The format URLs follow the pattern: {base}/{format}_{filename}
  *
  * This serves images directly from S3 — no proxy through the pod.
  */
@@ -32,13 +32,13 @@ export default function strapiImageLoader({ src, width }: ImageLoaderProps) {
 		return src;
 	}
 
-	// Transform /uploads/image.jpg → /uploads/thumbnail_image.jpg
-	const uploadsIndex = src.lastIndexOf("/uploads/");
-	if (uploadsIndex === -1) {
+	// Transform https://host/image.jpg → https://host/thumbnail_image.jpg
+	const lastSlash = src.lastIndexOf("/");
+	if (lastSlash === -1) {
 		return src;
 	}
 
-	const base = src.substring(0, uploadsIndex + "/uploads/".length);
-	const filename = src.substring(uploadsIndex + "/uploads/".length);
+	const base = src.substring(0, lastSlash + 1);
+	const filename = src.substring(lastSlash + 1);
 	return `${base}${prefix}_${filename}`;
 }
