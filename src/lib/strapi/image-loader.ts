@@ -15,6 +15,11 @@ export default function strapiImageLoader({ src, width }: ImageLoaderProps) {
 		return src;
 	}
 
+	// SVGs are vector — no responsive formats exist, serve as-is
+	if (src.endsWith(".svg")) {
+		return src;
+	}
+
 	// Pick the smallest Strapi format that covers the requested width
 	let prefix: string | null = null;
 	if (width <= 245) {
