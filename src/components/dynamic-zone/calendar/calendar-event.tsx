@@ -38,8 +38,9 @@ function isMultiDay(iso: string) {
 
 function getTimeString(iso: string) {
 	if (!iso.includes("T")) return null;
-	const d = new Date(iso);
-	return `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+	const m = iso.match(/T(\d{2}):(\d{2})/);
+	if (!m) return null;
+	return `${m[1]}:${m[2]}`;
 }
 
 function getEventTimeRange(start: string, end: string, duration: string) {
