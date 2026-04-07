@@ -27,6 +27,7 @@ async function fetchStrapi<T>(
 		headers: {
 			Authorization: `Bearer ${STRAPI_API_TOKEN}`,
 		},
+		next: { revalidate: 60 },
 	});
 
 	if (!res.ok) {
