@@ -9,9 +9,10 @@ import type {
 
 function InlineNode({ node }: { node: StrapiInlineNode }) {
 	if (node.type === "link") {
+		const link = node as StrapiLinkNode;
 		return (
-			<a href={(node as StrapiLinkNode).url}>
-				{(node as StrapiLinkNode).children.map((child, i) => (
+			<a href={link.url} target={link.target} rel={link.rel}>
+				{link.children.map((child, i) => (
 					<TextNode key={i} node={child} />
 				))}
 			</a>

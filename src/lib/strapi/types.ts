@@ -100,6 +100,8 @@ export interface StrapiLinkNode {
 	type: "link";
 	url: string;
 	children: StrapiTextNode[];
+	target?: string;
+	rel?: string;
 }
 
 export type StrapiInlineNode = StrapiTextNode | StrapiLinkNode;
