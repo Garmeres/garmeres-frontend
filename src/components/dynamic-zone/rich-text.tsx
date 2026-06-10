@@ -22,7 +22,8 @@ function InlineNode({ node }: { node: StrapiInlineNode }) {
 }
 
 function TextNode({ node }: { node: StrapiTextNode }) {
-	const parts = node.text.split("\n");
+	const text = node.text ?? "";
+	const parts = text.split("\n");
 	let el: React.ReactNode =
 		parts.length > 1
 			? parts.map((part, i) => (
@@ -31,7 +32,7 @@ function TextNode({ node }: { node: StrapiTextNode }) {
 						{part}
 					</span>
 				))
-			: node.text;
+			: text;
 	if (node.bold) el = <strong>{el}</strong>;
 	if (node.italic) el = <em>{el}</em>;
 	if (node.underline) el = <u>{el}</u>;
@@ -64,13 +65,23 @@ function BlockNode({ node }: { node: StrapiBlockNode }) {
 			const Tag = node.format === "ordered" ? "ol" : "ul";
 			return (
 				<Tag>
-					{node.children.map((item: StrapiListItemNode, i: number) => (
-						<li key={i}>
-							{item.children.map((child, j) => (
-								<InlineNode key={j} node={child} />
-							))}
-						</li>
-					))}
+					{node.children.map((item, i) => {
+						if (item.type === "list") {
+							return (
+								<li key={i} className="list-none">
+									<BlockNode node={item} />
+								</li>
+							);
+						}
+						const listItem = item as StrapiListItemNode;
+						return (
+							<li key={i}>
+								{listItem.children.map((child, j) => (
+									<InlineNode key={j} node={child} />
+								))}
+							</li>
+						);
+					})}
 				</Tag>
 			);
 		}

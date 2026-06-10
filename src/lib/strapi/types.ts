@@ -62,7 +62,7 @@ export interface StrapiHeadingBlock {
 export interface StrapiListBlock {
 	type: "list";
 	format: "ordered" | "unordered";
-	children: StrapiListItemNode[];
+	children: (StrapiListItemNode | StrapiListBlock)[];
 }
 
 export interface StrapiListItemNode {
