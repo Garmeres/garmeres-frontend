@@ -15,8 +15,8 @@ const messages: Record<
 		home: "Gå til forsiden",
 	},
 	se: {
-		heading: "Jorgalus ii gávdno",
-		body: "Dát sisdoallu ii gávdno davvisámegillii. Dat gávdno čuovvovaš gielain:",
+		heading: "Jorgalusa ii gávdno",
+		body: "Dát siidu ii gávdno davvisámegillii. Dat gávdno dušše dáid gielain:",
 		home: "Mana ruoktusiidui",
 	},
 };

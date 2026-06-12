@@ -88,7 +88,8 @@ export async function getPageBySlug(
 	const res = await fetchStrapi<StrapiCollectionResponse<Page>>("/pages", {
 		locale,
 		"filters[slug][$eq]": slug,
-		populate: "*",
+		"populate[backgroundImage][populate]": "*",
+		"populate[body][populate]": "*",
 	});
 	if (res.data.length === 0) return null;
 	return { data: res.data[0], meta: res.meta };

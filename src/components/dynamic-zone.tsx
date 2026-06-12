@@ -4,6 +4,7 @@ import { Calendar } from "./dynamic-zone/calendar";
 import { RichText } from "./dynamic-zone/rich-text";
 import { MembershipRegistrationForm } from "./dynamic-zone/membership-registration-form";
 import { BlogPosts } from "./dynamic-zone/blog-posts";
+import { ProfileCard } from "./dynamic-zone/profile-card";
 
 export function DynamicZone({
 	components,
@@ -31,6 +32,8 @@ export function DynamicZone({
 						return (
 							<MembershipRegistrationForm key={key} component={component} />
 						);
+					case "content.profile-card":
+						return <ProfileCard key={key} component={component} />;
 					default:
 						return null;
 				}

@@ -35,6 +35,7 @@ export async function Header({ locale }: { locale: string }) {
 					alt=""
 					width={70}
 					height={70}
+					unoptimized
 					className="rounded w-[45px] xl:w-[55px]"
 				/>
 				<span className="text-xl xl:text-2xl font-extralight">Garmeres</span>

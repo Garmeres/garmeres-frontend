@@ -123,6 +123,7 @@ export function LanguageSelector({
 					alt=""
 					width={24}
 					height={24}
+					unoptimized
 					aria-hidden="true"
 				/>
 			</button>

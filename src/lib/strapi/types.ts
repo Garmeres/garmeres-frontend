@@ -142,12 +142,24 @@ export interface MembershipRegistrationFormComponent {
 	termsAndConditions: StrapiBlockNode[] | null;
 }
 
+export interface ProfileCardComponent {
+	__component: "content.profile-card";
+	id: number;
+	name: string;
+	title?: string;
+	email?: string;
+	pronouns?: string;
+	description?: string;
+	image?: StrapiMedia | null;
+}
+
 export type DynamicZoneComponent =
 	| RichTextComponent
 	| HeadingComponent
 	| CalendarComponent
 	| BlogPostsComponent
-	| MembershipRegistrationFormComponent;
+	| MembershipRegistrationFormComponent
+	| ProfileCardComponent;
 
 // Localization reference (from populate[localizations])
 export interface LocalizationRef {
